@@ -1,5 +1,7 @@
 import ProtectedRoute from "./ProtectedRoute";
+import Modal from "./Modal";
 
 export {
-    ProtectedRoute
+    ProtectedRoute,
+    Modal
 }
