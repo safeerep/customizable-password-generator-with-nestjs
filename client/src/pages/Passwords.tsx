@@ -1,9 +1,16 @@
 import { BiCopy } from "react-icons/bi"
 import toast, { Toaster } from "react-hot-toast"
-import { useSelector } from "react-redux";
-import { RootState } from "../context/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../context/store";
+import { useEffect } from "react";
+import { getPasswords } from "../context/actions/actions";
 
 export default () => {
+
+    const dispatch: AppDispatch = useDispatch()
+    useEffect(() => {
+        dispatch( getPasswords())
+    }, [dispatch])
     // const [passwords, setPasswords] = useState(["first password", "second password", "third password", "forth password","first password", "second password", "third password", "forth password","first password", "second password", "third password", "forth password"])
     const passwords: string[] = useSelector((state: RootState) => state.user.data?.passwords)
     const handleCopy = (index: number) => {

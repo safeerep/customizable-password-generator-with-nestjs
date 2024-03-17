@@ -10,6 +10,7 @@ import {
   Main,
   Register
 } from './pages'
+import { Toaster } from "react-hot-toast"
 
 function App() {
   const user = useSelector((state: userState) => state.data?.user)
@@ -31,6 +32,7 @@ function App() {
           element={<ProtectedRoute element={<Main />} />}
         />
       </Routes>
+      <Toaster />
     </>
   )
 }

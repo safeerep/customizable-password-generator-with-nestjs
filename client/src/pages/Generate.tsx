@@ -2,9 +2,11 @@ import { useState } from "react"
 import { AiOutlineThunderbolt } from "react-icons/ai"
 import { BiCopy } from "react-icons/bi"
 import { GrSave } from "react-icons/gr"
-import toast, { Toaster } from "react-hot-toast"
-import { useSelector } from "react-redux"
-import { RootState } from "../context/store"
+import toast from "react-hot-toast"
+import { useDispatch, useSelector } from "react-redux"
+import { AppDispatch, RootState } from "../context/store"
+import { generatePassword, storePassword } from "../context/actions/actions"
+import { Modal } from "../components"
 
 type CheckBox = {
     label: string;
@@ -12,15 +14,17 @@ type CheckBox = {
 }
 
 export default () => {
+    const dispatch: AppDispatch = useDispatch()
     const password = useSelector((state: RootState) => state.user.data?.password)
     const [passwordLength, setPasswordLength] = useState('')
     const [passwordLengthError, setPasswordLengthError] = useState<boolean | string>(false)
     const [inputFieldsError, setInputFieldsError] = useState<boolean | string>(false)
+    const [storePasswordModalOpen, setStorePasswordModalOpen] = useState<boolean>(false)
     const [checkboxes, setCheckboxes] = useState<CheckBox[]>([
-        { label: 'Include uppercase letters', checked: true },
-        { label: 'Include lowercase letters', checked: true },
+        { label: 'Include uppercase', checked: true },
+        { label: 'Include lowercase', checked: true },
         { label: 'Include numbers', checked: true },
-        { label: 'Include special characters', checked: true }
+        { label: 'Include special-chars', checked: true }
     ]);
 
     const handleCheckboxChange = (label: string) => {
@@ -52,7 +56,10 @@ export default () => {
     const handleSubmit = () => {
         setInputFieldsError(false)
         const requirements = checkboxes.filter((cond: CheckBox) => {
-            return cond.checked === true;
+            if (cond.checked) {
+                const requirement: string[] = cond.label.split('')
+                return requirement[requirement.length - 1]
+            }
         })
         console.log(requirements)
         if (requirements.length === 0) {
@@ -61,11 +68,24 @@ export default () => {
         if (passwordLength === '') {
             setPasswordLengthError("give a length for the password")
         }
+        else {
+            const obj = {
+                requirements,
+                passwordLength
+            }
+            dispatch(generatePassword(obj))
+        }
     }
 
-    const storePassword = () => {
-
+    const handleStorePassword = (title: string) => {
+        setStorePasswordModalOpen(!storePasswordModalOpen)
+        const obj = {
+            title,
+            password
+        }
+        dispatch(storePassword(obj))
     }
+    
     return (
         <div className="w-full bg-blue-950 lg:px-32 px-4 ">
             <div className="flex flex-col justify-center text-4xl h-screen font-bold text-white">
@@ -121,7 +141,7 @@ export default () => {
                     </button>
                     {password &&
                         <button
-                            onClick={storePassword}
+                            onClick={() => setStorePasswordModalOpen(!storePasswordModalOpen)}
                             className="h-12 bg-violet-500 max-w-[100px] rounded-lg mt-4 text-xl text-white font-semibold flex justify-start items-center px-3" >
                             <GrSave />
                             <span className="px-2"> store </span>
@@ -129,7 +149,13 @@ export default () => {
                     }
                 </div>
             </div>
-            <Toaster />
+            <Modal
+                afterConfirmation={handleStorePassword}
+                isModalOpen={storePasswordModalOpen}
+                notesHead="Write a title to remember"
+                setModalOpen={setStorePasswordModalOpen}
+                submitButtonName="Save password"
+            />
         </div>
     )
 }

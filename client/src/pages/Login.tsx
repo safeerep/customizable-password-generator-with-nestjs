@@ -1,19 +1,43 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import BG from '../assets/Frame.png'
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../context/store';
+import { authCheck, login } from '../context/actions/actions';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export default () => {
-    const [email, setEmail] = useState('')
+    const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
-    const [errorMessage, setErrorMessage] = useState('') 
+    const [errorMessage, setErrorMessage] = useState('')
+    const dispatch: AppDispatch = useDispatch()
+    const navigate = useNavigate()
 
-    const handleSubmit = (e: any) => {
+    useEffect(() => {
+        const checkAuth = async () => {
+            const response = await dispatch(authCheck())
+            if (response.payload) {
+                navigate('/')
+            }
+        }
+        checkAuth()
+    }, [dispatch])
+
+    const handleSubmit = async (e: any) => {
         e.preventDefault()
-        if (!email || !password) {
-            setErrorMessage('Please enter your email and password.')
+        if (!userName || !password) {
+            setErrorMessage('Please enter your userName and password.')
             return;
         }
-        console.log(`Email: ${email}, Password: ${password}`)
+        console.log(`userName: ${userName}, Password: ${password}`)
         setErrorMessage('')
+        const response :any = await dispatch(login({ userName, password }))
+        if (response?.success) {
+            navigate('/')
+            toast.success(response?.message)
+        } else {
+            setErrorMessage(response?.message)
+        }
     }
 
     return (
@@ -29,15 +53,15 @@ export default () => {
                     )}
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-                            Enter Email
+                            Username
                         </label>
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="username"
                             type="text"
-                            placeholder="Email or Phone"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="enter your unique username"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
                         />
                     </div>
                     <div className="mb-6">
@@ -60,9 +84,12 @@ export default () => {
                         >
                             Sign in
                         </button>
-                        <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                        {/* <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
                             Recover Password?
-                        </a>
+                        </a> */}
+                    </div>
+                    <div className="text-center">
+                        <span className='text-xl font-bold'>OR</span>
                     </div>
                     <div className="text-center">
                         <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
