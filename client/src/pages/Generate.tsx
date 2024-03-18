@@ -82,13 +82,18 @@ export default () => {
         }
     }
 
-    const handleStorePassword = (title: string) => {
+    const handleStorePassword = async (title: string) => {
         setStorePasswordModalOpen(!storePasswordModalOpen)
         const obj = {
             title,
             password
         }
-        dispatch(storePassword(obj))
+        const response: any = await dispatch(storePassword(obj))
+        if (response.payload?.success) {
+            toast.success(response.payload?.message)
+        } else {
+            toast.error(response.payload?.message)
+        }
     }
 
     return (
