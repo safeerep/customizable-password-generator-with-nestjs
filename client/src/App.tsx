@@ -20,7 +20,7 @@ function App() {
     if (!user) {
       dispatch(authCheck())
     }
-  }, [dispatch])
+  }, [])
 
   return (
     <>
