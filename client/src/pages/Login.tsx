@@ -21,12 +21,16 @@ export default () => {
         }
         console.log(`userName: ${userName}, Password: ${password}`)
         setErrorMessage('')
-        const response :any = await dispatch(login({ userName, password }))
-        if (response?.success) {
-            navigate('/')
-            toast.success(response?.message)
-        } else {
-            setErrorMessage(response?.message)
+        try {
+            const response :any = await dispatch(login({ userName, password }))
+            if (response?.payload?.success) {
+                navigate('/')
+                toast.success(response?.payload.message)
+            } else {
+                setErrorMessage(response?.payload.message)
+            }
+        } catch (error: any) {
+            setErrorMessage(error?.response?.payload?.message)
         }
     }
 

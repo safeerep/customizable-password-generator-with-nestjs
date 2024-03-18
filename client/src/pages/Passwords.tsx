@@ -6,13 +6,11 @@ import { useEffect } from "react";
 import { getPasswords } from "../context/actions/actions";
 
 export default () => {
-
     const dispatch: AppDispatch = useDispatch()
     useEffect(() => {
         dispatch( getPasswords())
     }, [dispatch])
-    // const [passwords, setPasswords] = useState(["first password", "second password", "third password", "forth password","first password", "second password", "third password", "forth password","first password", "second password", "third password", "forth password"])
-    const passwords: string[] = useSelector((state: RootState) => state.user.data?.passwords)
+    const passwords: string[] = useSelector((state: RootState) => state.user?.data?.passwords)
     const handleCopy = (index: number) => {
         navigator.clipboard.writeText(passwords[index])
             .then(() => {
@@ -25,8 +23,8 @@ export default () => {
     }
     return (
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 w-full gap-4 mb-2 px-12 min-h-screen">
-            {passwords.length &&
-                passwords.map((password, index) => {
+            {passwords?.length &&
+                passwords?.map((password, index) => {
                     return (
                         <div
                             key={password}
