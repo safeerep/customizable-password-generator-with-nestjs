@@ -129,6 +129,7 @@ export default () => {
                         <input type="text" placeholder="generated password will shows here" className="p-3 rounded-lg bg-white w-[400px] text-black text-lg" value={password} readOnly />
                         {
                             password !== "" &&
+                            password !== undefined &&
                             <BiCopy className="absolute right-4 text-black cursor-pointer" onClick={handleCopy} />
                         }
                     </div>

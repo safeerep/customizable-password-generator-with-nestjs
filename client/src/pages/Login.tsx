@@ -14,13 +14,18 @@ export default () => {
     const navigate = useNavigate()
 
     const handleSubmit = async (e: any) => {
+        setErrorMessage('')
         e.preventDefault()
         if (!userName || !password) {
-            setErrorMessage('Please enter your userName and password.')
+            setErrorMessage('Please enter your username and password.')
+            return;
+        } else if (
+            userName.trim() === '' ||
+            password.trim() === '' 
+        ) {
+            setErrorMessage('Please enter your username and password.')
             return;
         }
-        console.log(`userName: ${userName}, Password: ${password}`)
-        setErrorMessage('')
         try {
             const response :any = await dispatch(login({ userName, password }))
             if (response?.payload?.success) {
@@ -73,14 +78,11 @@ export default () => {
                     </div>
                     <div className="flex items-center justify-between mb-4">
                         <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             type="submit"
                         >
                             Sign in
                         </button>
-                        {/* <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-                            Recover Password?
-                        </a> */}
                     </div>
                     <div className="text-center">
                         <span className='text-xl font-bold'>OR</span>
@@ -88,7 +90,7 @@ export default () => {
                     <div className="text-center">
                         <span 
                         onClick={() => navigate('/register')}
-                        className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                        className="cursor-pointer inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
                             Create a new account
                         </span>
                     </div>

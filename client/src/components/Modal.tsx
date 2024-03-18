@@ -43,12 +43,12 @@ export default ({ isModalOpen, setModalOpen, notesHead, afterConfirmation, submi
                             {/* body */}
 
                             <div className="relative px-12 flex-auto w-full my-4 gap-y-8">
-                                <label className='font-semibold text-lg' htmlFor="notes">{notesHead}</label>
+                                <label className='font-semibold text-lg text-black' htmlFor="notes">{notesHead}</label>
                                 <input
                                     type="text"
                                     placeholder='write here'
                                     value={note}
-                                    className=" w-full py-2 px-2 outline-none border-2 border-black"
+                                    className="w-full py-2 px-2 outline-none border-2 border-black text-black"
                                     onChange={(e) => setNote(e.target.value)}
                                 />
                                 {
