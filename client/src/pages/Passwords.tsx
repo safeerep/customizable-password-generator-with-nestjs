@@ -8,11 +8,11 @@ import { getPasswords } from "../context/actions/actions";
 export default () => {
     const dispatch: AppDispatch = useDispatch()
     useEffect(() => {
-        dispatch( getPasswords())
+        dispatch(getPasswords())
     }, [dispatch])
-    const passwords: string[] = useSelector((state: RootState) => state.user?.data?.passwords)
+    const passwords: {password: string, title: string}[] = useSelector((state: RootState) => state.user?.data?.passwords)
     const handleCopy = (index: number) => {
-        navigator.clipboard.writeText(passwords[index])
+        navigator.clipboard.writeText(passwords[index].password)
             .then(() => {
                 toast.success("Password copied successfully")
             })
@@ -24,10 +24,10 @@ export default () => {
     return (
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 w-full gap-4 mb-2 px-12 min-h-screen">
             {passwords?.length &&
-                passwords?.map((password, index) => {
+                passwords?.map((passwordObj: {password: string, title: string} , index) => {
                     return (
                         <div
-                            key={password}
+                            key={index}
                             className={`m-5 
                                     ${(index + 8) % 7 === 0 ? 'bg-violet-600' :
                                     (index + 8) % 7 === 6 ? 'bg-indigo-600' :
@@ -40,9 +40,17 @@ export default () => {
                                     h-60 inline-block cursor-pointer border p-2`}
                         >
                             <div className="flex flex-col justify-center items-center w-full h-full">
-                                <div className="relative flex items-center">
-                                    <input type="text" className="p-3 rounded-lg bg-white text-black text-lg" value={password} readOnly />
-                                    <BiCopy className="absolute right-4 text-black cursor-pointer"
+                                <div className="relative flex  justify-between">
+                                    <div className="p-3 rounded-lg bg-white text-black text-lg pe-8" >
+                                        <strong>
+                                            {passwordObj.title}
+                                        </strong>
+                                        <br />
+                                        <span className="text-sm">
+                                            {passwordObj.password}
+                                        </span>
+                                    </div>
+                                    <BiCopy className="absolute right-3 top-3 gap-2 text-black cursor-pointer"
                                         onClick={() => {
                                             handleCopy(index)
                                         }}

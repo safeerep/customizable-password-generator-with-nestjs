@@ -19,8 +19,13 @@ export default () => {
         if (!userName || !password) {
             setErrorMessage('Please enter your username and password.')
             return;
+        } else if (
+            userName.trim() === '' ||
+            password.trim() === '' 
+        ) {
+            setErrorMessage('Please enter your username and password.')
+            return;
         }
-        console.log(`Username: ${userName}, Password: ${password}`)
         const obj: { userName: string, password: string } = {
             userName,
             password
@@ -90,14 +95,14 @@ export default () => {
                     </div>
                     <div className="flex items-center justify-between mb-4">
                         <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             type="submit"
                         >
                             Sign up
                         </button>
                     </div>
                     <div className="text-center">
-                        <span className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                        <span className="cursor-pointer inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
                         onClick={() => navigate('/login')}>
                             already registered? login
                         </span>
