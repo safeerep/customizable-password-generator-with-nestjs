@@ -66,7 +66,7 @@ export default () => {
             setInputFieldsError("please include at least one type of character")
         }
         if (passwordLength === '') {
-            setPasswordLengthError("give a length for the password")
+            setPasswordLengthError("Give a length for the password")
         }
         else {
             const obj = {
@@ -85,7 +85,7 @@ export default () => {
         }
         dispatch(storePassword(obj))
     }
-    
+
     return (
         <div className="w-full bg-blue-950 lg:px-32 px-4 ">
             <div className="flex flex-col justify-center text-4xl h-screen font-bold text-white">
@@ -129,7 +129,8 @@ export default () => {
                         <input type="text" placeholder="generated password will shows here" className="p-3 rounded-lg bg-white w-[400px] text-black text-lg" value={password} readOnly />
                         {
                             password !== "" &&
-                            <BiCopy className="absolute right-4 text-black cursor-pointer" onClick={handleCopy} />}
+                            <BiCopy className="absolute right-4 text-black cursor-pointer" onClick={handleCopy} />
+                        }
                     </div>
                 </div>
                 <div className="flex gap-2">
