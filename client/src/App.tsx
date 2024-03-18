@@ -18,11 +18,16 @@ function App() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!user) {
-      dispatch(authCheck())
-    } else {
-      navigate('/')
+    const checkAuth = async () => {
+      if (!user) {
+        const res: any = await dispatch(authCheck())
+        if (res.payload?.success) {
+          navigate('/')
+        }
+        
+      }
     }
+    checkAuth()
   }, [])
 
   return (
