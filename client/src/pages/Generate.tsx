@@ -62,11 +62,16 @@ export default () => {
                 requirements.push(requirement[requirement.length - 1])
             }
         })
-        if (requirements.length === 0) {
-            setInputFieldsError("please include at least one type of character")
-        }
-        if (passwordLength === '') {
-            setPasswordLengthError("Give a length for the password")
+        if (requirements.length === 0 ||
+            passwordLength === ''
+        ) {
+            if (requirements.length === 0) {
+                setInputFieldsError("please include at least one type of character")
+            }
+            else {
+                setPasswordLengthError("Give a length for the password")
+            }
+            return;
         }
         else if (Number(passwordLength) > 3) {
             const obj = {
