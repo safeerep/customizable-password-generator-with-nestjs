@@ -25,12 +25,29 @@ export default () => {
             userName,
             password
         }
-        const response: any = await dispatch(register(obj))
-        if (response?.success) {
-            navigate('/')
-            toast.success(response.message)
-        } else {
-            setErrorMessage(response?.message)
+        if (password.length < 4 || userName.length < 4) {
+            if (password.length < 4 && userName.length < 4) {
+                setErrorMessage('username and password should contain atleast four chars')
+            }
+            if (password.length < 4) {
+                setErrorMessage('password should contain atleast four chars')
+            }
+            else {
+                setErrorMessage('username should contain atleast four chars')
+            }
+            return;
+        } 
+        
+        try {  
+            const response: any = await dispatch(register(obj))
+            if (response?.payload?.success) {
+                navigate('/')
+                toast.success(response?.payload.message)
+            } else {
+                setErrorMessage(response?.payload?.message)
+            }
+        } catch (error: any) {
+            setErrorMessage(error?.payload?.message)
         }
     }
     
