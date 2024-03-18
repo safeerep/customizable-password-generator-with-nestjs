@@ -55,20 +55,20 @@ export default () => {
 
     const handleSubmit = () => {
         setInputFieldsError(false)
-        const requirements = checkboxes.filter((cond: CheckBox) => {
+        const requirements: string[] = []
+        checkboxes.forEach((cond: CheckBox) => {
             if (cond.checked) {
-                const requirement: string[] = cond.label.split('')
-                return requirement[requirement.length - 1]
+                const requirement: string[] = cond.label.split(' ')
+                requirements.push(requirement[requirement.length - 1])
             }
         })
-        console.log(requirements)
         if (requirements.length === 0) {
             setInputFieldsError("please include at least one type of character")
         }
         if (passwordLength === '') {
             setPasswordLengthError("Give a length for the password")
         }
-        else {
+        else if (Number(passwordLength) > 3) {
             const obj = {
                 requirements,
                 passwordLength
@@ -134,12 +134,15 @@ export default () => {
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    <button
-                        onClick={handleSubmit}
-                        className="h-12 bg-green-500 max-w-[250px] rounded-lg mt-4 text-xl text-white font-semibold flex justify-start items-center px-3" >
-                        <AiOutlineThunderbolt />
-                        {password === "" ? "Generate Password" : "Generate new one"}
-                    </button>
+                    {
+                        !passwordLengthError &&
+                        <button
+                            onClick={handleSubmit}
+                            className="h-12 bg-green-500 max-w-[250px] rounded-lg mt-4 text-xl text-white font-semibold flex justify-start items-center px-3" >
+                            <AiOutlineThunderbolt />
+                            {password === "" ? "Generate Password" : "Generate new one"}
+                        </button>
+                    }
                     {password &&
                         <button
                             onClick={() => setStorePasswordModalOpen(!storePasswordModalOpen)}
