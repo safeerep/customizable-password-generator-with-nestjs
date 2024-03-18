@@ -3,7 +3,8 @@ import axios from "axios"
 export const URL: string = "http://localhost:7777/api"
 
 const axiosInstance = axios.create({
-    baseURL: URL
+    baseURL: URL,
+    withCredentials: true
 })
 
 axiosInstance.interceptors.response.use((response) => {
