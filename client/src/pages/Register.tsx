@@ -15,25 +15,25 @@ export default () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
+        setErrorMessage('')
         if (!userName || !password) {
-            setErrorMessage('Please enter your userName and password.')
+            setErrorMessage('Please enter your username and password.')
             return;
         }
-        console.log(`userName: ${userName}, Password: ${password}`)
-        setErrorMessage('')
+        console.log(`Username: ${userName}, Password: ${password}`)
         const obj: { userName: string, password: string } = {
             userName,
             password
         }
         if (password.length < 4 || userName.length < 4) {
             if (password.length < 4 && userName.length < 4) {
-                setErrorMessage('username and password should contain atleast four chars')
+                setErrorMessage('Username and password should contain atleast four chars')
             }
             if (password.length < 4) {
-                setErrorMessage('password should contain atleast four chars')
+                setErrorMessage('Password should contain atleast four chars')
             }
             else {
-                setErrorMessage('username should contain atleast four chars')
+                setErrorMessage('Username should contain atleast four chars')
             }
             return;
         } 
@@ -57,7 +57,7 @@ export default () => {
                 <img src={BG} alt="" />
             </div>
             <div className="px-8 py-6 bg-white rounded-lg shadow-md text-left w-full md:w-2/3 lg:w-1/2">
-                <div className="font-bold text-2xl text-center mb-4">Sign in</div>
+                <div className="font-bold text-2xl text-center mb-4">Register</div>
                 <form onSubmit={handleSubmit}>
                     {errorMessage && (
                         <div className="mb-4 text-red-500 text-center font-bold">{errorMessage}</div>
