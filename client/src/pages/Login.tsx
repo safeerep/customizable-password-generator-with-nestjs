@@ -92,9 +92,11 @@ export default () => {
                         <span className='text-xl font-bold'>OR</span>
                     </div>
                     <div className="text-center">
-                        <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                        <span 
+                        onClick={() => navigate('/register')}
+                        className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
                             Create a new account
-                        </a>
+                        </span>
                     </div>
                 </form>
             </div>

@@ -79,9 +79,10 @@ export default () => {
                         </button>
                     </div>
                     <div className="text-center">
-                        <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                        <span className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                        onClick={() => navigate('/login')}>
                             already registered? login
-                        </a>
+                        </span>
                     </div>
                 </form>
             </div>
