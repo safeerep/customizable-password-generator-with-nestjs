@@ -35,6 +35,17 @@ export const register = createAsyncThunk('/register',
     }
 )
 
+export const logout = createAsyncThunk('/logout', 
+    async () => {
+        return commonRequest(
+            "get",
+            "/logout",
+            {},
+            config
+        )
+    }
+)
+
 // generate password
 export const generatePassword = createAsyncThunk('/generate', 
     async ( requirements: object) => {
