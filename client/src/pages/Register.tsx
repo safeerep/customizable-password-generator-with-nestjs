@@ -29,7 +29,7 @@ export default () => {
             if (password.length < 4 && userName.length < 4) {
                 setErrorMessage('Username and password should contain atleast four chars')
             }
-            if (password.length < 4) {
+            else if (password.length < 4) {
                 setErrorMessage('Password should contain atleast four chars')
             }
             else {
