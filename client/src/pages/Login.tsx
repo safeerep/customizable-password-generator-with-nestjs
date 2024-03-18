@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import BG from '../assets/Frame.png'
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../context/store';
-import { authCheck, login } from '../context/actions/actions';
+import { login } from '../context/actions/actions';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -12,16 +12,6 @@ export default () => {
     const [errorMessage, setErrorMessage] = useState('')
     const dispatch: AppDispatch = useDispatch()
     const navigate = useNavigate()
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            const response = await dispatch(authCheck())
-            if (response.payload) {
-                navigate('/')
-            }
-        }
-        checkAuth()
-    }, [dispatch])
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()

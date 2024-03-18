@@ -33,6 +33,7 @@ export default () => {
             setErrorMessage(response?.message)
         }
     }
+    
     return (
         <div className="flex items-center justify-between md:justify-center min-h-screen bg-gray-100 lg:px-32 px-4">
             <div className='hidden lg:block'>
